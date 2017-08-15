@@ -1,0 +1,47 @@
+
+body {
+	background-color: rgba(178, 196, 176, 0.9);
+}
+
+.app {
+	padding: 0 5em 5em 5em;
+	margin-top: 3em;
+	margin-right: auto;
+	margin-left: auto;
+	width: 10em;
+	border-radius: 25%;
+	border: solid black 1px;
+	background-color:gray;
+}
+
+.app > h1 {
+	text-align: center;
+}
+@font-face {
+  font-family: 'Digital7';
+  src: local('Digital7'), url(./digital-7.ttf) format('woff');
+}
+
+.startstop > button {
+	margin: 0.5em 0 0.5em 0;
+	padding: 0.5em;
+	border-radius: 10px;
+	width: 100%;
+	font-size: 1em;
+	background-color: red;
+}
+.counter {
+	font-size: 4em;
+	font-family: 'Digital7';
+	color: #15ff00;
+	background-color: black;
+	border-radius: 10px;
+	margin-left: auto;
+	margin-right: auto;
+	width: 2.5em;
+	padding: 0 0 0.3em 0.1em;
+	box-sizing: border-box;
+	
+}
+
+
