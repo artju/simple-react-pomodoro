@@ -2,10 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import ring from './ring.wav';
 
-
-class StartStop extends React.Component {
-
-  
+class StartStop extends React.Component {  
 render() {
     return (
       <button onClick={this.props.onClick}>{this.props.name}</button>
@@ -14,7 +11,6 @@ render() {
 }
 
 class Pomodoro extends Component {
-  props = {audio: null };
   constructor() {
     super();
     this.state = {
@@ -22,38 +18,39 @@ class Pomodoro extends Component {
       timeString: "25:00",
       current: "Work!",
       sessions: 1,
-      counting: false
+      counting: false,
     }
-    this.props.audio = new Audio({ring});
-    this.time = 0;
+
+    this.timer = null;
     this.handleClick = this.handleClick.bind(this);
     this.count = this.count.bind(this);
     this.secsToMins = this.secsToMins.bind(this);
   }
 
+  /* Counts remaining time */
   count() {
     let secs = this.state.timeLeft - 1;
     if (secs === 0) {
       if (this.state.current === "Work!") {
         secs = 300;
         this.setState({current: "Break time!"});
-        this.props.audio.play();
       } else {
         secs = 1500;
         let sessions = parseInt(this.state.sessions) + 1;
         this.setState({current: "Work!", sessions: sessions});
-
       }
+      document.getElementById('ringer').play(); //End of session sound
     }
     this.setState({timeLeft: secs});
     this.secsToMins();
-
   }
 
+  /* Display of time */
   secsToMins() {
     let mins = Math.floor(this.state.timeLeft / 60);
     let secs = this.state.timeLeft % 60;
     let minsAndSecs = "";
+
     if (mins < 10) {
       minsAndSecs += "0" + mins + ":";
     } else {
@@ -69,20 +66,16 @@ class Pomodoro extends Component {
     this.setState({timeString: minsAndSecs});
   }
 
+  /* Starting and stopping timer */
   handleClick() {
-
     if (!this.state.counting) {
       this.setState({counting: true});
-      this.time = setInterval(this.count, 10);
-
+      this.timer = setInterval(this.count, 1000);
     } else {
       this.setState({ counting: false});
-      clearInterval(this.time);
-
+      clearInterval(this.timer);
     }
   }
-
-
 
   render() {
     return (
@@ -95,7 +88,7 @@ class Pomodoro extends Component {
           <StartStop onClick={() => this.handleClick()} name={this.state.counting ? 'Stop' : 'Start'}/>
         </div>
         <p>Session {this.state.sessions}</p>
-        <div>{this.props.audio}</div>
+        <div><audio id="ringer" src={ring}/></div>
       </div>
     );
   }
